@@ -6,8 +6,6 @@ from config import DEV_MODE
 # Set CORS headers for main requests
 headers = {
     'Content-Type': 'application/json',
-    # 'Access-Control-Allow-Origin': 'https://mydomain.com',
-    # 'Access-Control-Allow-Credentials': 'true'
 }
 
 

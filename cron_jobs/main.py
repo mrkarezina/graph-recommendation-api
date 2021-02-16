@@ -11,8 +11,6 @@ from config import KEYFILE, DOWNLOAD_RSS_URL
 # Set CORS headers for main requests
 headers = {
     'Content-Type': 'application/json',
-    # 'Access-Control-Allow-Origin': 'https://mydomain.com',
-    # 'Access-Control-Allow-Credentials': 'true'
 }
 
 
@@ -83,5 +81,3 @@ def update_rss_articles(request):
         'failed_queue': failed_queue
     }), 200, headers)
 
-
-# print(update_rss_articles(123))
