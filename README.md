@@ -1,24 +1,22 @@
-# Content Recommendation API
+# Graph Recommendation API
 
-The content recommendation api is used to provide recommendations for related content based on the underlying
-knowledge graph stored as a Neo4j Database. The [graph scripts](https://github.com/mrkarezina/unsupervised-news-visualization-scripts) use the language_processor_api api to set up the
-actual knowledge graph. The API can also be used to provide explainable content recommendations
-where relations to related content are explained.
+The graph recommendation api is used to provide recommendations for related content based on the underlying
+knowledge graph stored in a Neo4j Database. The [data pipeline](https://github.com/mrkarezina/news-explorer-pipeline) uses several microservices to set up the
+actual knowledge graph. The API can also be used to provide explainable content recommendations, meaning relations to related content are explained.
 
-The API is used to power chatbots, voice apps (Google Assistant / Alexa), and web applications for media sites.
-It provides endpoints for things like summaries, related content, and explainable related content.
-The API is responsible for interacting with the neo4j database which hosts the knowledge graph.
-
+The API can be used to power chatbots, voice apps (Google Assistant / Alexa), and web applications for media sites. It provides endpoints for summaries, related content, and explainable related content. The API is responsible for querying the Neo4j database which hosts the knowledge graph.
 
 ## Endpoints
 
 ### POST /explore
-Takes a url of an article in the graph and finds the corresponding title.
-- Finds the most similar articles to that title
+Queries a url of an article in the graph to find related articles.
+- Queries the most similar articles by cosine similarity.
 - Explains connections from original article to related articles in terms of concepts, entities, and topics.
 
 **Request Params**
-- article_url (Must be article in the graph)
+- article_url: ID identifying article
+- processor_id: ID of specific document embedding model to use
+- user_id: ID of subgraph in multi-tenent database
 
 Returns a JSON response with the processed original article as well as data on the related articles.
 
@@ -169,7 +167,7 @@ Route takes the url of an article
 - Processed article using the language-processor api
 
 **Request Params**
-- article_url (Not required to be in graph)
+- article_url
 - processor_id (The id of the cloud function used to process the text, different cloud functions for different Gensim Doc2Vec models. Ie: Health, Tech ...)
 
 Returns JSON containing the summary.
