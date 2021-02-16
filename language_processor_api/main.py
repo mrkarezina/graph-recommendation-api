@@ -91,15 +91,15 @@ def process_language(request):
     try:
         text = data_dict["text"]
     except KeyError:
-        return 'Bad params'
+        return 'Bad params', 500
 
     if len(text.split()) > 12000:
-        return 'To many tokens, max 12000'
+        return 'To many tokens, max 12000', 500
 
     is_valid, summary, keywords = process_text(text)
 
     if not is_valid:
-        return 'Summary Error'
+        return 'Summary Error', 500
 
     else:
         embedding = get_embedding(keywords)
