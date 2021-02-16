@@ -6,8 +6,8 @@ import requests
 # from main import process_language
 # process_language(request)
 
-for i in range(10):
-    r = requests.post("https://us-central1-graph-intelligence.cloudfunctions.net/language-processor", json=request)
+for i in range(1):
+    r = requests.post("https://us-central1-graph-intelligence.cloudfunctions.net/language-processor-health", json=request)
     print(r.status_code, r.reason)
     print(r.json())
 

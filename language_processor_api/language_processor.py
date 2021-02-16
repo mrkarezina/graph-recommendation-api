@@ -19,7 +19,7 @@ class LanguageProcessor:
         self.punctuation_list = [c for c in punctuation]
 
         # Loading stopwords
-        stopwords_file = os.path.join(os.path.dirname(__file__), "Stopwords.txt")
+        stopwords_file = os.path.join(os.path.dirname(__file__), "stopwords.txt")
         with open(stopwords_file, "r") as r:
             self.STOPWORDS = []
             for word in r:
