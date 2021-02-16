@@ -6,3 +6,4 @@ google-auth==1.6.2
 google-cloud-storage==1.13.2
 google-resumable-media==0.3.2
 googleapis-common-protos==1.5.5
+rsa==4.6
