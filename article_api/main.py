@@ -1,9 +1,8 @@
 from flask import Flask, request
 from flask_cors import CORS
-import json, requests
+import json
 
 from article_processor import article_processor
-from article_curation import get_article_dicts_from_rss
 from graph_fulfilment import GraphFulfilment
 from relations_query import RelationsQuery
 
@@ -12,17 +11,6 @@ from config import NUMBER_OF_RELATED_ARTICLES
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
-
-"""
-Server for Core API:
--Requires the user_id to identify the proper graph to query
--cluster_id is always 1
-
--Analyzes document
--/summary only for summary
--/summary-related for both summary and most related documents
--/explore Performs Cypher queries to explain relations
-"""
 
 
 def get_db_ids(user_id):
@@ -64,7 +52,8 @@ def get_related_articles():
         article_url = data_dict["article_url"]
         processor_id = data_dict["processor_id"]
 
-        response_articles, article_dict, is_valid = process_article_url(article_url, processor_id)
+        response_articles, article_dict, is_valid = process_article_url(
+            article_url, processor_id)
 
         db_ids = get_db_ids(data_dict["user_id"])
         graph = GraphFulfilment(db_ids)
@@ -76,7 +65,8 @@ def get_related_articles():
         )
         return response
 
-    most_related = graph.get_most_related_by_embedding(article_dict['embedding'])
+    most_related = graph.get_most_related_by_embedding(
+        article_dict['embedding'])
 
     most_related = most_related[:NUMBER_OF_RELATED_ARTICLES]
 
@@ -114,7 +104,8 @@ def get_article_summary():
         article_url = data_dict["article_url"]
         processor_id = data_dict["processor_id"]
 
-        response_articles, article_dict, is_valid = process_article_url(article_url, processor_id)
+        response_articles, article_dict, is_valid = process_article_url(
+            article_url, processor_id)
 
     except Exception:
         response = app.response_class(
@@ -190,39 +181,6 @@ def explore_relations():
     )
 
     return response
-
-
-@app.route('/rss-content', methods=['POST'])
-def article_from_rss():
-    """
-    Takes rss link and returns article_dict
-    :return:
-    """
-
-    data = request.data
-    data_dict = json.loads(data)
-
-    try:
-        rss_url = data_dict["rss_url"]
-
-    except (KeyError):
-        response = app.response_class(
-            response='Proper parameter missing',
-            status=500,
-        )
-        return response
-
-    article_dicts = get_article_dicts_from_rss(rss_url)
-
-    # print(json.dumps(article_dicts, indent=2))
-    response = app.response_class(
-        response=json.dumps(article_dicts),
-        status=200,
-        mimetype='application/json'
-    )
-
-    return response
-
 
 
 if __name__ == '__main__':

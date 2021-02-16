@@ -2,11 +2,7 @@ import newspaper
 import requests
 from article_downloader import Article
 
-# There are multiple functions for differnt doc2vec models
-natural_language_function_base_url = "https://us-central1-graph-intelligence.cloudfunctions.net/{0}"
-
-# If less than 100 tokens retry parsing the article not cleaning dom
-retry_article_parse_tokens = 100
+from config import natural_language_function_base_url, retry_article_parse_tokens
 
 
 def download(url, clean_doc=True):
@@ -92,7 +88,8 @@ def article_processor(url, processor_id):
         if len(article_dict['text'].split()) < 100:
             is_valid = False
 
-        processed_language = process_language(article_dict['text'], processor_id)
+        processed_language = process_language(
+            article_dict['text'], processor_id)
 
         article_dict['summary'] = processed_language['summary']
         article_dict['embedding'] = processed_language['embedding']
