@@ -2,6 +2,7 @@ venv/
 .idea/
 .DS_store
 __pycache__
+Archive.zip
 
 
 # Google
