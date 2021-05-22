@@ -6,6 +6,14 @@ actual knowledge graph. The API can also be used to provide explainable content 
 
 The API can be used to power chatbots, voice apps (Google Assistant / Alexa), and web applications for media sites. It provides endpoints for summaries, related content, and explainable related content. The API is responsible for querying the Neo4j database which hosts the knowledge graph.
 
+
+## Graphs+ Demo
+
+Graph visualization of several days worth of news from different sources powered by the underlying knowledge graph. See the [pipeline](https://github.com/mrkarezina/news-explorer-pipeline) for building a new knowledge graph.
+
+[Graphs+](https://graphs.markoarezina.com/)
+
+
 ## Endpoints
 
 ### POST /explore
